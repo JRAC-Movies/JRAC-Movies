@@ -37,7 +37,7 @@ public class Movie {
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
-            targetEntity = Genre.class)
+            targetEntity = Movie.class)
 
     @JoinTable(
             name = "Genre_Movies",
@@ -47,5 +47,5 @@ public class Movie {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @JsonIgnoreProperties("Movies")
-    private Collection<Genre> genres;
+    private Collection<Movie> movies;
 }
