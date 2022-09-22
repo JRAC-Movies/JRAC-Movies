@@ -25,7 +25,7 @@ export default function router(URI) {
                         'Accept': 'application/json',
                     }
                 }},
-            uri: '/movies',
+            uri: '/',
             title: 'Movies',
             viewEvent: MoviesJSFunction
         },

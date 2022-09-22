@@ -282,7 +282,7 @@ async function addMovie() {
                 console.log("add movie error: " + response.status);
             } else {
                 console.log("add movie ok");
-                createView("/movies");
+                createView("/");
             }
         });
 }
