@@ -35,7 +35,7 @@ public class Movie {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column
-    private Rating rating;
+    private MovieRating rating;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
