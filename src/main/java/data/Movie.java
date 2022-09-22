@@ -47,5 +47,5 @@ public class Movie {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @JsonIgnoreProperties("Movies")
-    private Collection<Movie> movies;
+    private Collection<Genre> Genres;
 }
