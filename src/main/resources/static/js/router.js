@@ -29,6 +29,18 @@ export default function router(URI) {
             title: 'Movies',
             viewEvent: MoviesJSFunction
         },
+        '/': {
+            returnView: MoviesHTMLFunction,
+            state: {movies: {
+                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                }},
+            uri: '/movies',
+            title: 'Movies',
+            viewEvent: MoviesJSFunction
+        },
         '/logout': {
             returnView: Logout,
             state: {},
