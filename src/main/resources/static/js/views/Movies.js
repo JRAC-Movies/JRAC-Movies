@@ -103,6 +103,7 @@ export default function MoviesHTMLFunction(props) {
       <img src="${movie.posterUrl}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title movieTitle text-center">${movie.title}</h5>
+        <h5 class="card-title movieTitle text-center">${movie.rating}</h5>
         <p class="card-text"></p>
       </div>
       <div id="movieFoot">
@@ -115,33 +116,50 @@ export default function MoviesHTMLFunction(props) {
     }
 }
 
-
 export function MoviesJSFunction() {
 
     let editMovieSubmitBtn = document.getElementById("editMovieSubmitBtn");
     editMovieSubmitBtn.addEventListener("click", updateMovie);
 
-    function updateMovie () {
+    async function updateMovie() {
 
         const updateMovieTitleInput = document.getElementById(`editMovieTitle`);
         const updateMovieTitle = updateMovieTitleInput.value.trim();
         let id = this.getAttribute('data-id');
         console.log(id);
+        const updateRequestOptions = {
+            method: "GET",
+        }
+        const getMovieDataUpdate = await fetch(`http://localhost:8080/movies/${id}`, updateRequestOptions)
+            .then(async function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    return await response.json();
+                }
+            });
+        console.log(getMovieDataUpdate.title);
 
         const movieUpdate = {
-            title: updateMovieTitle
+            title: updateMovieTitle,
+            director: "Someone?",
+            plot: getMovieDataUpdate.plot,
+            posterUrl: getMovieDataUpdate.posterUrl,
+            rating: getMovieDataUpdate.rating
+
         };
 
         const requestOptions = {
-            method: "PATCH",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(movieUpdate)
         }
         fetch(`http://localhost:8080/movies/${id}`, requestOptions)
-            .then(function(response) {
-                if(!response.ok) {
+            .then(function (response) {
+                if (!response.ok) {
                     console.log("add movie error: " + response.status);
                 } else {
                     console.log("add movie ok");
@@ -157,7 +175,8 @@ export function MoviesJSFunction() {
         editButton[i].addEventListener("click", getMovieData)
         moreInfoBtn[i].addEventListener("click", getMovieData)
     }
-    async function getMovieData () {
+
+    async function getMovieData() {
         const requestOptions = {
             method: "GET",
         }
@@ -203,9 +222,6 @@ export function MoviesJSFunction() {
     //         });
 
 
-
-
-
     let delButton = document.getElementsByClassName('delBtn');
     for (let i = 0; i < delButton.length; i++) {
         delButton[i].addEventListener("click", deleteMovie)
@@ -229,12 +245,13 @@ export function MoviesJSFunction() {
     }
 
     const insertMovieBtn = document.querySelector("#addMovieBtn");
-    insertMovieBtn.addEventListener("click", addMovie)}
+    insertMovieBtn.addEventListener("click", addMovie)
+}
 
 async function addMovie() {
     const newMovieTitleInput = document.getElementById(`newMovieTitle`);
     const newMovieTitle = newMovieTitleInput.value.trim();
-    if(newMovieTitle.length < 1) {
+    if (newMovieTitle.length < 1) {
         alert("Entries cannot be blank!")
         console.log("Entries cannot be blank!");
         return;
@@ -279,8 +296,8 @@ async function addMovie() {
         body: JSON.stringify(newMovie)
     }
     fetch("http://localhost:8080/movies/create", requestOptions)
-        .then(function(response) {
-            if(!response.ok) {
+        .then(function (response) {
+            if (!response.ok) {
                 console.log("add movie error: " + response.status);
             } else {
                 console.log("add movie ok");
@@ -288,8 +305,6 @@ async function addMovie() {
             }
         });
 }
-
-
 
 
 // poster path
