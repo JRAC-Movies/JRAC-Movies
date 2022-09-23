@@ -13,7 +13,7 @@ import java.util.Collection;
 @Setter
 @ToString
 @Entity
-@Table(name = "movies")
+@Table(name = "Movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Movie {
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
-            targetEntity = Movie.class)
+            targetEntity = Genre.class)
 
     @JoinTable(
             name = "Genre_Movies",
