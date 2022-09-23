@@ -20,7 +20,7 @@ export default function router(URI) {
         '/movies': {
             returnView: MoviesHTMLFunction,
             state: {movies: {
-                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    url: "http://localhost:8080/movies",
                     headers: {
                         'Accept': 'application/json',
                     }
@@ -32,7 +32,7 @@ export default function router(URI) {
         '/': {
             returnView: MoviesHTMLFunction,
             state: {movies: {
-                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    url: "http://localhost:8080/movies",
                     headers: {
                         'Accept': 'application/json',
                     }

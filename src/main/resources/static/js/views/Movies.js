@@ -100,7 +100,7 @@ export default function MoviesHTMLFunction(props) {
     function makeMovieCard(movie) {
         return `
     <div class="card col-3 h-100">
-      <img src="${movie.src}" class="card-img-top" alt="...">
+      <img src="${movie.posterUrl}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title movieTitle text-center">${movie.title}</h5>
         <p class="card-text"></p>
@@ -164,7 +164,7 @@ export function MoviesJSFunction() {
         const id = this.getAttribute(`data-id`)
         let editbtn = document.getElementById(`editMovieSubmitBtn`);
         editbtn.setAttribute("data-id", id)
-        const getMovieData = await fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, requestOptions)
+        const getMovieData = await fetch(`http://localhost:8080/`, requestOptions)
             .then(async function (response) {
                 if (!response.ok) {
                     console.log("add movie error: " + response.status);
