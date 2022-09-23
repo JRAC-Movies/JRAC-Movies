@@ -3,6 +3,7 @@ package data;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -12,10 +13,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "rating")
 public class Rating {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-@Column(nullable = false)
-    private String rating;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MovieRating rating;
 }

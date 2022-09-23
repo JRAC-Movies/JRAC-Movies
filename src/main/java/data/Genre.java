@@ -22,11 +22,12 @@ public class Genre {
 
     @Column(nullable = false)
     private String genre;
+//    roger comment
 
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.REFRESH},
-            targetEntity = Genre.class)
+            targetEntity = Movie.class)
 //    might need to change Genre.class to Movie.class
     @JoinTable(
             name="Genre_Movies",

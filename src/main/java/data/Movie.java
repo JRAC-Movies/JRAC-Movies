@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import java.util.Collection;
 @Setter
 @ToString
 @Entity
-@Table(name = "movies")
+@Table(name = "Movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +32,10 @@ public class Movie {
     private String posterUrl;
 
 
-    @ManyToOne
-    private Rating rating;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MovieRating rating;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
@@ -47,5 +50,5 @@ public class Movie {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @JsonIgnoreProperties("Movies")
-    private Collection<Genre> genres;
+    private Collection<Genre> Genres;
 }
