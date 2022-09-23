@@ -1,4 +1,4 @@
-import MoviesHTMLFunction, {MoviesJSFunction} from "./views/home.js";
+import MoviesHTMLFunction, {MoviesJSFunction} from "./views/Movies.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
@@ -17,18 +17,6 @@ import AddAMovieHTMLFunction, {AddAMovieJSFunction} from "./views/add-a-movie.js
  */
 export default function router(URI) {
     const routes = {
-        '/': {
-            returnView: MoviesHTMLFunction,
-            state: {movies: {
-                    url: "https://glory-cedar-barge.glitch.me/movies",
-                    headers: {
-                        'Accept': 'application/json',
-                    }
-                }},
-            uri: '/',
-            title: 'Movies',
-            viewEvent: MoviesJSFunction
-        },
         '/movies': {
             returnView: MoviesHTMLFunction,
             state: {movies: {

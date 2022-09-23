@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/", produces = "application/json")
+@RequestMapping(value = "/movies", produces = "application/json")
 
 public class MovieController {
 
