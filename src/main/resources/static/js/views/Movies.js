@@ -164,7 +164,7 @@ export function MoviesJSFunction() {
         const id = this.getAttribute(`data-id`)
         let editbtn = document.getElementById(`editMovieSubmitBtn`);
         editbtn.setAttribute("data-id", id)
-        const getMovieData = await fetch(`http://localhost:8080/`, requestOptions)
+        const getMovieData = await fetch(`http://localhost:8080/movies/${id}`, requestOptions)
             .then(async function (response) {
                 if (!response.ok) {
                     console.log("add movie error: " + response.status);
@@ -216,7 +216,7 @@ export function MoviesJSFunction() {
                 method: "DELETE",
             }
             const id = this.getAttribute(`data-id`)
-            fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, requestOptions)
+            fetch(`http://localhost:8080/movies/${id}`, requestOptions)
                 .then(function (response) {
                     if (!response.ok) {
                         console.log("add movie error: " + response.status);
@@ -262,8 +262,10 @@ async function addMovie() {
     console.log(movieDBID);
     const newMovie = {
         title: newMovieTitle,
-        src: newMoviePoster,
-        overview: newMovieOverview
+        director: "string",
+        plot: "string",
+        posterUrl: newMoviePoster,
+        rating: "PG13"
     };
 
 
@@ -276,7 +278,7 @@ async function addMovie() {
         },
         body: JSON.stringify(newMovie)
     }
-    fetch("https://glory-cedar-barge.glitch.me/movies", requestOptions)
+    fetch("http://localhost:8080/movies/create", requestOptions)
         .then(function(response) {
             if(!response.ok) {
                 console.log("add movie error: " + response.status);
