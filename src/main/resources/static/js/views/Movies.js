@@ -262,10 +262,10 @@ async function addMovie() {
     console.log(movieDBID);
     const newMovie = {
         title: newMovieTitle,
-        director: "string",
+        director: "Someone?",
         plot: newMoviePlot,
         posterUrl: newMoviePoster,
-        rating: "PG13"
+        rating: "UNRATED"
     };
 
 
