@@ -1,4 +1,4 @@
-package controller;
+package com.jracmovies.jracmovies.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

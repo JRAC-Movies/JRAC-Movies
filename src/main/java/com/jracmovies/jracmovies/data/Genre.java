@@ -1,4 +1,4 @@
-package data;
+package com.jracmovies.jracmovies.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

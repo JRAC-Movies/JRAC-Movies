@@ -1,4 +1,4 @@
-package data;
+package com.jracmovies.jracmovies.data;
 
 import lombok.*;
 
