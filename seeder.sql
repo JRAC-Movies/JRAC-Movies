@@ -1,5 +1,5 @@
 use chase;
-INSERT INTO Movie(Title, Director, Plot, Rating, PosterUrl)
+INSERT INTO movies(title, director, plot, rating, poster_url)
 VALUES ('John Wick', 'Chad Stahelski',
         'Legendary assassin John Wick (Keanu Reeves) retired from his violent career after marrying the love of his life. Her sudden death leaves John in deep mourning. When sadistic mobster Iosef Tarasov (Alfie Allen) and his thugs steal John''s prized car and kill the puppy that was a last gift from his wife, John unleashes the remorseless killing machine within and seeks vengeance. Meanwhile, Iosef''s father (Michael Nyqvist) -- John''s former colleague -- puts a huge bounty on John''s head.',
         1, 'https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg'),
@@ -19,21 +19,21 @@ https://m.media-amazon.com/images/M/MV5BMTYxNDMyOTAxN15BMl5BanBnXkFtZTgwMDg1ODYz
         1,
         'https://m.media-amazon.com/images/M/MV5BMjNkNWQ4MjktOGI5Mi00YmRjLTk2ZTEtOWU3ZjgwY2ZlMzI5XkEyXkFqcGdeQWRvb2xpbmhk._V1_.jpg');
 
-INSERT INTO Rating(Rating)
+INSERT INTO rating(rating)
 VALUES ('R'),
        ('PG-13'),
        ('M'),
        ('PG'),
        ('none');
 
-INSERT INTO Genre(Genre)
+INSERT INTO genre(genre)
 VALUES ('Horror'),
        ('Comedy'),
        ('Action'),
        ('Thriller'),
        ('Drama');
 
-INSERT INTO Genre_Movies(Movie, Genre)
+INSERT INTO genre_movies(movie_id, genre_id)
 VALUES (1, 3),
        (1, 4),
        (2, 2),
@@ -42,4 +42,3 @@ VALUES (1, 3),
        (4, 5),
        (5, 3),
        (5, 4);
-
