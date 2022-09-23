@@ -1,6 +1,6 @@
-package repository;
+package com.jracmovies.jracmovies.repository;
 
-import data.Genre;
+import com.jracmovies.jracmovies.data.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GenreRepository extends JpaRepository<Genre, Long> {
