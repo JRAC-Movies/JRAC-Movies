@@ -129,7 +129,7 @@ export function MoviesJSFunction() {
         console.log(id);
 
         const movieUpdate = {
-            title: updateMovieTitle,
+            title: updateMovieTitle
         };
 
         const requestOptions = {
@@ -139,7 +139,7 @@ export function MoviesJSFunction() {
             },
             body: JSON.stringify(movieUpdate)
         }
-        fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, requestOptions)
+        fetch(`http://localhost:8080/movies/${id}`, requestOptions)
             .then(function(response) {
                 if(!response.ok) {
                     console.log("add movie error: " + response.status);
@@ -174,11 +174,11 @@ export function MoviesJSFunction() {
                 }
             });
         let moreInfoP = document.getElementById(`moreInfoP`);
-        moreInfoP.innerText = getMovieData.overview;
+        moreInfoP.innerText = getMovieData.plot;
         let titleValue = document.getElementById(`editMovieTitle`);
         titleValue.setAttribute("value", `${getMovieData.title}`)
         console.log(`Title: ${getMovieData.title}`);
-        console.log(`Overview: ${getMovieData.overview}`);
+        console.log(`Overview: ${getMovieData.plot}`);
     }
 
     // let moreInfoBtn = document.getElementsByClassName(`moreInfoBtn`);
@@ -257,15 +257,15 @@ async function addMovie() {
     console.log(getMoviePoster.results[0].poster_path);
     console.log(getMoviePoster.results[0].overview);
     let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
-    let newMovieOverview = getMoviePoster.results[0].overview;
+    let newMoviePlot = getMoviePoster.results[0].overview;
     let movieDBID = getMoviePoster.results[0].id;
     console.log(movieDBID);
     const newMovie = {
         title: newMovieTitle,
-        director: "string",
-        plot: "string",
+        director: "Someone?",
+        plot: newMoviePlot,
         posterUrl: newMoviePoster,
-        rating: "PG13"
+        rating: "UNRATED"
     };
 
 
