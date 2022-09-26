@@ -102,7 +102,7 @@ export default function MoviesHTMLFunction(props) {
         console.log(movie.genres);
         let movieGenres = movie.genres;
         for (let i = 0; i < movie.genres.length; i++) {
-                genre += movie.genres[i].genre + " ";
+            genre += movie.genres[i].genre + " ";
         }
         return `
     <div class="card col-3 h-100">
@@ -265,12 +265,12 @@ async function addMovie() {
         return;
     }
 
-    const posterRequestOptions = {
+    const RequestOptions = {
         method: "GET",
     }
 // Get movie id for each movie from initial API call and push that id into a separate api call for the director and cast.
 // Getting movie ID ok, now need to make multiple API calls to grab cast/crew information using the movie ID from a different API endpoint.
-    const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, posterRequestOptions)
+    const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, RequestOptions)
         .then(async function (response) {
             if (!response.ok) {
                 console.log("add movie error: " + response.status);
@@ -279,6 +279,32 @@ async function addMovie() {
                 return await response.json();
             }
         });
+    const getMovieDirRat = await fetch(`http://localhost:8080/moviesDB`, RequestOptions)
+        .then(async function (response) {
+            if (!response.ok) {
+                console.log("add movie error: " + response.status);
+            } else {
+                console.log("add movie ok");
+                return await response.json();
+            }
+        });
+
+    let newMovieDirector = "";
+    let newMovieRating = "";
+    console.log(newMovieTitle);
+    console.log(getMovieDirRat[0].title);
+    console.log(getMovieDirRat[0].title.includes(newMovieTitle));
+    newMovieRating = "UNRATED";
+    newMovieDirector = "Director";
+    for (let i = 0; i < getMovieDirRat.length; i++) {
+        if (getMovieDirRat[i].title.includes(newMovieTitle)) {
+            newMovieDirector = getMovieDirRat[i].director;
+            newMovieRating = getMovieDirRat[i].rating;
+            break;
+        }
+    }
+
+    console.log(getMovieDirRat.length);
     console.log(getMoviePoster.results[0].poster_path);
     console.log(getMoviePoster.results[0].overview);
     let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
@@ -287,10 +313,10 @@ async function addMovie() {
     console.log(movieDBID);
     const newMovie = {
         title: newMovieTitle,
-        director: "Someone?",
+        director: newMovieDirector,
         plot: newMoviePlot,
         posterUrl: newMoviePoster,
-        rating: "UNRATED"
+        rating: newMovieRating
     };
 
 
