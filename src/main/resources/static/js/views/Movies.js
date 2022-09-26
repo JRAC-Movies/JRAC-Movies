@@ -1,7 +1,8 @@
 import createView from "../createView.js";
 
-
+let movies = [];
 export default function MoviesHTMLFunction(props) {
+    movies = props.movies
     return `
         <header>
             <h1 class="text-center">JRAC Entertainment</h1>
@@ -84,7 +85,7 @@ export default function MoviesHTMLFunction(props) {
         
         <main>
             <div id="movieListContainer" class="row">
-            ${makeMovieCards(props.movies)} 
+            ${makeMovieCards(movies)} 
             </div>
         </main>
     `;
@@ -99,8 +100,6 @@ export default function MoviesHTMLFunction(props) {
 
     function makeMovieCard(movie) {
         let genre = "";
-        console.log(movie.genres);
-        let movieGenres = movie.genres;
         for (let i = 0; i < movie.genres.length; i++) {
             genre += movie.genres[i].genre + " ";
         }
@@ -124,10 +123,28 @@ export default function MoviesHTMLFunction(props) {
     }
 }
 
-export function MoviesJSFunction() {
+export function MoviesJSFunction(props) {
+
 
     let editMovieSubmitBtn = document.getElementById("editMovieSubmitBtn");
     editMovieSubmitBtn.addEventListener("click", updateMovie);
+
+    async function getAllMovies() {
+        const getRequestOptions = {
+            method: "GET"
+        }
+        // This line breaks the code for some reasons.
+        return await fetch(`http://localhost:8080/movies`, getRequestOptions)
+            .then(async function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    return await response.json();
+                }
+            });
+    }
+
 
     async function updateMovie() {
 
@@ -257,6 +274,8 @@ export function MoviesJSFunction() {
 }
 
 async function addMovie() {
+    // This line breaks the code for some reasons.
+    console.log(movies);
     const newMovieTitleInput = document.getElementById(`newMovieTitle`);
     const newMovieTitle = newMovieTitleInput.value.trim();
     if (newMovieTitle.length < 1) {
@@ -266,7 +285,7 @@ async function addMovie() {
     }
 
     const RequestOptions = {
-        method: "GET",
+        method: "GET"
     }
 // Get movie id for each movie from initial API call and push that id into a separate api call for the director and cast.
 // Getting movie ID ok, now need to make multiple API calls to grab cast/crew information using the movie ID from a different API endpoint.
@@ -288,6 +307,9 @@ async function addMovie() {
                 return await response.json();
             }
         });
+    const getRequestOptions = {
+        method: "GET"
+    }
 
     console.log(newMovieTitle);
     console.log(getMovieDirRat[0].title);
