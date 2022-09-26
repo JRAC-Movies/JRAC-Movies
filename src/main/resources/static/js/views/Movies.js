@@ -98,12 +98,18 @@ export default function MoviesHTMLFunction(props) {
     }
 
     function makeMovieCard(movie) {
+        let genre;
+        for (let i = 0; i < movie.genres.length; i++) {
+            genre += movie.genres[i].genre;
+        }
         return `
     <div class="card col-3 h-100">
       <img src="${movie.posterUrl}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title movieTitle text-center">${movie.title}</h5>
         <h5 class="card-title movieTitle text-center">${movie.rating}</h5>
+        <h5 id="genres" class="card-title movieTitle text-center">${genre}</h5>
+
         <p class="card-text"></p>
       </div>
       <div id="movieFoot">
