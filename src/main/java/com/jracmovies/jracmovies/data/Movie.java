@@ -50,5 +50,6 @@ public class Movie {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
     @JsonIgnoreProperties("movies")
+    @ToString.Exclude
     private Collection<Genre> genres;
 }

@@ -98,9 +98,11 @@ export default function MoviesHTMLFunction(props) {
     }
 
     function makeMovieCard(movie) {
-        let genre;
+        let genre = "";
+        console.log(movie.genres);
+        let movieGenres = movie.genres;
         for (let i = 0; i < movie.genres.length; i++) {
-            genre += movie.genres[i].genre;
+                genre += movie.genres[i].genre + " ";
         }
         return `
     <div class="card col-3 h-100">
