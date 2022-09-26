@@ -85,7 +85,7 @@ export default function MoviesHTMLFunction(props) {
         
         <main>
             <div id="movieListContainer" class="row">
-            ${makeMovieCards(movies)} 
+            ${makeMovieCards(props.movies)} 
             </div>
         </main>
     `;
@@ -123,28 +123,11 @@ export default function MoviesHTMLFunction(props) {
     }
 }
 
-export function MoviesJSFunction(props) {
+export function MoviesJSFunction() {
 
 
     let editMovieSubmitBtn = document.getElementById("editMovieSubmitBtn");
     editMovieSubmitBtn.addEventListener("click", updateMovie);
-
-    async function getAllMovies() {
-        const getRequestOptions = {
-            method: "GET"
-        }
-        // This line breaks the code for some reasons.
-        return await fetch(`http://localhost:8080/movies`, getRequestOptions)
-            .then(async function (response) {
-                if (!response.ok) {
-                    console.log("add movie error: " + response.status);
-                } else {
-                    console.log("add movie ok");
-                    return await response.json();
-                }
-            });
-    }
-
 
     async function updateMovie() {
 
@@ -275,7 +258,6 @@ export function MoviesJSFunction(props) {
 
 async function addMovie() {
     // This line breaks the code for some reasons.
-    console.log(movies);
     const newMovieTitleInput = document.getElementById(`newMovieTitle`);
     const newMovieTitle = newMovieTitleInput.value.trim();
     if (newMovieTitle.length < 1) {
@@ -284,82 +266,91 @@ async function addMovie() {
         return;
     }
 
-    const RequestOptions = {
-        method: "GET"
+    let currentMovies = [];
+    console.log(movies[0].title);
+    console.log(newMovieTitle);
+    for (let i = 0; i < movies.length; i++) {
+        currentMovies = [];
+        currentMovies.push(movies[i].title);
     }
+    if (!currentMovies.includes(newMovieTitle)) {
+
+        const RequestOptions = {
+            method: "GET"
+        }
 // Get movie id for each movie from initial API call and push that id into a separate api call for the director and cast.
 // Getting movie ID ok, now need to make multiple API calls to grab cast/crew information using the movie ID from a different API endpoint.
-    const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, RequestOptions)
-        .then(async function (response) {
-            if (!response.ok) {
-                console.log("add movie error: " + response.status);
-            } else {
-                console.log("add movie ok");
-                return await response.json();
-            }
-        });
-    const getMovieDirRat = await fetch(`http://localhost:8080/moviesDB`, RequestOptions)
-        .then(async function (response) {
-            if (!response.ok) {
-                console.log("add movie error: " + response.status);
-            } else {
-                console.log("add movie ok");
-                return await response.json();
-            }
-        });
-    const getRequestOptions = {
-        method: "GET"
-    }
-
-    console.log(newMovieTitle);
-    console.log(getMovieDirRat[0].title);
-    console.log(getMovieDirRat[0].title.includes(newMovieTitle));
-    let newMovieRating = "UNRATED";
-    let newMovieDirector = "Director";
-    for (let i = 0; i < getMovieDirRat.length; i++) {
-        if (getMovieDirRat[i].title.includes(newMovieTitle)) {
-            newMovieDirector = getMovieDirRat[i].director;
-            newMovieRating = getMovieDirRat[i].rating;
-            break;
+        const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, RequestOptions)
+            .then(async function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    return await response.json();
+                }
+            });
+        const getMovieDirRat = await fetch(`http://localhost:8080/moviesDB`, RequestOptions)
+            .then(async function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    return await response.json();
+                }
+            });
+        const getRequestOptions = {
+            method: "GET"
         }
-    }
-    let newMoviePoster;
-    let newMoviePlot;
-    console.log(getMoviePoster.results[0]);
-    if (getMoviePoster.results[0] === undefined) {
-        newMoviePlot = "No plot available."
-        newMoviePoster = "https://media.istockphoto.com/vectors/coming-soon-comic-style-title-on-red-circle-background-old-cinema-vector-id1175562600?k=20&m=1175562600&s=612x612&w=0&h=vyaf0LMtSwNGrU0fxRktUesVv5xYbc4eHZ99Zw39QjA="
-    } else {
-        newMoviePlot = getMoviePoster.results[0].overview;
-        newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
-    }
-    const newMovie = {
-        title: newMovieTitle,
-        director: newMovieDirector,
-        plot: newMoviePlot,
-        posterUrl: newMoviePoster,
-        rating: newMovieRating
-    };
 
-
-    console.log("Movie is ready to be inserted");
-
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newMovie)
-    }
-    fetch("http://localhost:8080/movies/create", requestOptions)
-        .then(function (response) {
-            if (!response.ok) {
-                console.log("add movie error: " + response.status);
-            } else {
-                console.log("add movie ok");
-                createView("/");
+        let newMovieRating = "UNRATED";
+        let newMovieDirector = "Director";
+        for (let i = 0; i < getMovieDirRat.length; i++) {
+            if (getMovieDirRat[i].title.includes(newMovieTitle)) {
+                newMovieDirector = getMovieDirRat[i].director;
+                newMovieRating = getMovieDirRat[i].rating;
+                break;
             }
-        });
+        }
+        let newMoviePoster;
+        let newMoviePlot;
+        console.log(getMoviePoster.results[0]);
+        if (getMoviePoster.results[0] === undefined) {
+            newMoviePlot = "No plot available."
+            newMoviePoster = "https://media.istockphoto.com/vectors/coming-soon-comic-style-title-on-red-circle-background-old-cinema-vector-id1175562600?k=20&m=1175562600&s=612x612&w=0&h=vyaf0LMtSwNGrU0fxRktUesVv5xYbc4eHZ99Zw39QjA="
+        } else {
+            newMoviePlot = getMoviePoster.results[0].overview;
+            newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
+        }
+        const newMovie = {
+            title: newMovieTitle,
+            director: newMovieDirector,
+            plot: newMoviePlot,
+            posterUrl: newMoviePoster,
+            rating: newMovieRating
+        };
+
+
+        console.log("Movie is ready to be inserted");
+
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newMovie)
+        }
+        fetch("http://localhost:8080/movies/create", requestOptions)
+            .then(function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    createView("/");
+                }
+            });
+    } else {
+        alert("Already exists!");
+    }
 }
 
 
