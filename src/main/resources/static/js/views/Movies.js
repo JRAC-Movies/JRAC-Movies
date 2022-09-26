@@ -289,13 +289,11 @@ async function addMovie() {
             }
         });
 
-    let newMovieDirector = "";
-    let newMovieRating = "";
     console.log(newMovieTitle);
     console.log(getMovieDirRat[0].title);
     console.log(getMovieDirRat[0].title.includes(newMovieTitle));
-    newMovieRating = "UNRATED";
-    newMovieDirector = "Director";
+    let newMovieRating = "UNRATED";
+    let newMovieDirector = "Director";
     for (let i = 0; i < getMovieDirRat.length; i++) {
         if (getMovieDirRat[i].title.includes(newMovieTitle)) {
             newMovieDirector = getMovieDirRat[i].director;
@@ -303,14 +301,16 @@ async function addMovie() {
             break;
         }
     }
-
-    console.log(getMovieDirRat.length);
-    console.log(getMoviePoster.results[0].poster_path);
-    console.log(getMoviePoster.results[0].overview);
-    let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
-    let newMoviePlot = getMoviePoster.results[0].overview;
-    let movieDBID = getMoviePoster.results[0].id;
-    console.log(movieDBID);
+    let newMoviePoster;
+    let newMoviePlot;
+    console.log(getMoviePoster.results[0]);
+    if (getMoviePoster.results[0] === undefined) {
+        newMoviePlot = "No plot available."
+        newMoviePoster = "https://media.istockphoto.com/vectors/coming-soon-comic-style-title-on-red-circle-background-old-cinema-vector-id1175562600?k=20&m=1175562600&s=612x612&w=0&h=vyaf0LMtSwNGrU0fxRktUesVv5xYbc4eHZ99Zw39QjA="
+    } else {
+        newMoviePlot = getMoviePoster.results[0].overview;
+        newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
+    }
     const newMovie = {
         title: newMovieTitle,
         director: newMovieDirector,
