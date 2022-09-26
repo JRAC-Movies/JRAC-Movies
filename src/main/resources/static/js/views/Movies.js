@@ -73,6 +73,7 @@ export default function MoviesHTMLFunction(props) {
                     <h1>More Info</h1>
                     <form>
                         <p id="moreInfoP"></p>
+                        <p id="moreInfoD"></p>
                     </form>
                 </div>
               </div>
@@ -151,7 +152,7 @@ export function MoviesJSFunction() {
 
         const movieUpdate = {
             title: updateMovieTitle,
-            director: "Someone?",
+            director: getMovieDataUpdate.director,
             plot: getMovieDataUpdate.plot,
             posterUrl: getMovieDataUpdate.posterUrl,
             rating: getMovieDataUpdate.rating
@@ -202,6 +203,9 @@ export function MoviesJSFunction() {
             });
         let moreInfoP = document.getElementById(`moreInfoP`);
         moreInfoP.innerText = getMovieData.plot;
+        let moreInfoD = document.getElementById('moreInfoD');
+        moreInfoD.innerText = "Director: " + getMovieData.director;
+
         let titleValue = document.getElementById(`editMovieTitle`);
         titleValue.setAttribute("value", `${getMovieData.title}`)
         console.log(`Title: ${getMovieData.title}`);
@@ -269,8 +273,8 @@ async function addMovie() {
     let currentMovies = [];
     console.log(movies[0].title);
     console.log(newMovieTitle);
+    console.log(movies);
     for (let i = 0; i < movies.length; i++) {
-        currentMovies = [];
         currentMovies.push(movies[i].title);
     }
     if (!currentMovies.includes(newMovieTitle)) {
