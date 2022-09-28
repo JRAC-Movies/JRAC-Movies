@@ -1,10 +1,15 @@
 .jalopy-nav {
     margin-right: 1em;
 }
-
+body{
+    background-color: ghostwhite;
+}
 .jalopy-container {
     position: relative;
     min-height: 100vh;
+}
+#heading{
+    color: dodgerblue;
 }
 #app {
     padding-bottom: 2.5rem;
@@ -28,7 +33,7 @@ footer {
 #HomePage {
     color: #efcd21;
     text-decoration: underline;
-    background-image: url("/assets/istockphoto-1076588860-612x612.jpeg");
+    background-image: url("//assets/istockphoto-1076588860-612x612.jpeg");
     background-position: left;
 }
 #addMoviePlusBtn {

@@ -5,7 +5,7 @@ export default function MoviesHTMLFunction(props) {
     movies = props.movies
     return `
         <header>
-            <h1 class="text-center">JRAC Entertainment</h1>
+            <h1 id="heading" class="text-center">JRAC Entertainment</h1>
         </header>
 <!--        <a id="addMoviePlusBtn" data-link href="/add-a-movie" target="_blank">+</a>-->
         <!-- Button trigger modal -->
